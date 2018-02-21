@@ -2,6 +2,7 @@ package com.example.escproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,8 +14,8 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
-    EditText emailText;
-    EditText passwordText;
+    TextInputEditText emailText;
+    TextInputEditText passwordText;
     Button loginButton;
     TextView signupLink;
 
