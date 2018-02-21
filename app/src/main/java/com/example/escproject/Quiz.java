@@ -1,11 +1,7 @@
-package com.example.a94360.smartinteraction;
+package com.example.escproject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by 94360 on 2018/2/21.
- */
 
 public class Quiz {
     private int ID;

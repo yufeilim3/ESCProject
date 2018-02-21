@@ -1,8 +1,4 @@
-package com.example.a94360.smartinteraction;
-
-/**
- * Created by 94360 on 2018/2/21.
- */
+package com.example.escproject;
 
 public class Feedback {
     String slides;
