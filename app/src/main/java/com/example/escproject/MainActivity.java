@@ -1,4 +1,4 @@
-package com.example.escproject;
+package com.example.a94360.smartinteraction;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
