@@ -3,4 +3,12 @@
 
     <string name="Email">Email</string>
     <string name="Password">Password</string>
+    <string name="Login">Login</string>
+    <string name="Signup_account">No account yet? Sign up</string>
+
+    <string name="Name">Name</string>
+    <string name="ReenterPassword">Re-enter Password</string>
+    <string name="Signup">Sign Up</string>
+    <string name="Have_account">Already a member? Login</string>
+
 </resources>
