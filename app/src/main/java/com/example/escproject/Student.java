@@ -61,6 +61,7 @@ public class Student implements User{
     @Override
     public void addCourse(Course course) {
         courses.add(course);
+        course.students.add(this);
     }
 
     public void answerQuiz(Quiz quiz){
