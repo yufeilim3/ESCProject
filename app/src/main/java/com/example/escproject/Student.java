@@ -67,4 +67,8 @@ public class Student implements User{
     public void answerQuiz(Quiz quiz){
 
     }
+    
+    public void addFeedback(String slides, int page, String content) {
+        Feedback f = new Feedback(slides, page, content, this);
+    }
 }
