@@ -1,6 +1,7 @@
 package com.example.escproject;
 
-<<<<<<< HEAD
+import java.util.List;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student implements User{
@@ -59,9 +60,7 @@ public class Student implements User{
         this.courses = courses;
     }
 
-=======
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Student implements User{
     final int ID;
