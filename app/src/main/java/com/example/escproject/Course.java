@@ -1,8 +1,11 @@
 package com.example.escproject;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.List;
 
+=======
+>>>>>>> parent of f27357f... stub
 public class Course {
     private int ID;
     String name;
