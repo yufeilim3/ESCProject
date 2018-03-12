@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 package com.example.a94360.smartinteraction;
+=======
+package com.example.escproject;
+>>>>>>> 3663fb360364227b4436b150fdec5a468fa8f43e
 
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
 /**
  * Created by 94360 on 2018/2/21.
  */
@@ -14,11 +19,28 @@ public class Quiz {
     //List<Answer> answers;
 
     public Quiz(String name, Course course, List<String> questions, List<String> answers, List<Double> points, int ID) {
+=======
+public class Quiz {
+    final int ID;
+    Course course;
+    List<Question> questions;
+
+    Quiz(Course course, List<String> questions, List<String> answers, List<Double> points, int ID) {
+>>>>>>> 3663fb360364227b4436b150fdec5a468fa8f43e
         this.course = course;
         parseQuestions(questions, answers, points);
         this.ID = ID;
     }
 
+<<<<<<< HEAD
+=======
+    Quiz(int ID, Course course) {
+        this.ID = ID;
+        this.course = course;
+        questions = new ArrayList<>();
+    }
+
+>>>>>>> 3663fb360364227b4436b150fdec5a468fa8f43e
     private void parseQuestions(List<String> questions, List<String> answers, List<Double> points) {
         this.questions = new ArrayList<>();
         int amount = questions.size();
@@ -27,7 +49,11 @@ public class Quiz {
         }
     }
 
+<<<<<<< HEAD
     public void calculateGrade(Student student) {
+=======
+    void updateGrade(Student student) {
+>>>>>>> 3663fb360364227b4436b150fdec5a468fa8f43e
         List<String> answer = student.answers.get(student.answers.size()-1);
         double grade = 0;
         for(int i=0;i<questions.size();i++) {
@@ -36,7 +62,11 @@ public class Quiz {
         student.grades.add(grade);
     }
 
+<<<<<<< HEAD
     public int getID() {
+=======
+    int getID() {
+>>>>>>> 3663fb360364227b4436b150fdec5a468fa8f43e
         return ID;
     }
 }

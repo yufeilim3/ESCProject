@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "505972638081",
+    "firebase_url": "https://escproject-e2708.firebaseio.com",
+    "project_id": "escproject-e2708",
+    "storage_bucket": "escproject-e2708.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505972638081:android:a581a976013aeb11",
+        "android_client_info": {
+          "package_name": "com.example.escproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505972638081-fmkmtrttm2o7jg1ajbggsms52pb626t2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.escproject",
+            "certificate_hash": "55736954e3bf63e2e49dce1a9a40954c5f89754e"
+          }
+        },
+        {
+          "client_id": "505972638081-69p96a4q3o25p1ik6akrosaek5jagk3o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW4ySSAM262bgZumx0-_kREKHJqNWx-hY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505972638081-69p96a4q3o25p1ik6akrosaek5jagk3o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
