@@ -2,8 +2,11 @@ package com.example.escproject;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.List;
 
+=======
+>>>>>>> parent of f27357f... stub
 =======
 >>>>>>> parent of f27357f... stub
 public class Course {
