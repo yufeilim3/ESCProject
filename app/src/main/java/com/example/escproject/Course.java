@@ -1,5 +1,7 @@
 package com.example.escproject;
 
+import java.util.List;
+
 public class Course {
     private int ID;
     String name;
