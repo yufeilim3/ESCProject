@@ -127,13 +127,13 @@ public class Student implements User{
     @Override
     public void addCourse(Course course) {
         courses.add(course);
-        course.students.add(this);
     }
 
 <<<<<<< HEAD
     public void answerQuiz(Quiz quiz){
 
     }
+<<<<<<< HEAD
     
     public void addFeedback(String slides, int page, String content) {
         Feedback f = new Feedback(slides, page, content, this);
@@ -156,4 +156,6 @@ public class Student implements User{
         return output;
     }
 >>>>>>> yuanzhi
+=======
+>>>>>>> parent of 8456c2d... Merge branch 'yufei' of https://github.com/yufeilim3/ESCProject into yufei
 }

@@ -10,6 +10,7 @@ import java.util.List;
 =======
 >>>>>>> parent of f27357f... stub
 public class Course {
+<<<<<<< HEAD
     private int ID;
     String name;
     int classID;
@@ -64,5 +65,10 @@ public class Course {
         return students;
     }
 >>>>>>> yuanzhi
+=======
+
+
+
+>>>>>>> parent of 8456c2d... Merge branch 'yufei' of https://github.com/yufeilim3/ESCProject into yufei
 }
 

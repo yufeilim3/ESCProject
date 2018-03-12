@@ -18,6 +18,7 @@ public class Feedback {
     String content;
     Student student;
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     public Feedback(String slides, int page, String content, Student student) {
 =======
@@ -35,4 +36,6 @@ public class Feedback {
 =======
 >>>>>>> 3663fb360364227b4436b150fdec5a468fa8f43e
 >>>>>>> yuanzhi
+=======
+>>>>>>> parent of 8456c2d... Merge branch 'yufei' of https://github.com/yufeilim3/ESCProject into yufei
 }

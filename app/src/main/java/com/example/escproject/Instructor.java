@@ -87,7 +87,6 @@ public class Instructor implements User{
     @Override
     public void addCourse(Course course) {
         courses.add(course);
-        course.instructors.add(this);
     }
 
 <<<<<<< HEAD
