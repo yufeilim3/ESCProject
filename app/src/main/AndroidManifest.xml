@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.Dark">
@@ -26,6 +27,9 @@
 =======
         <activity android:name=".MainActivity">
 >>>>>>> parent of 28f37d2... Merge branch 'yufei' of https://github.com/yufeilim3/ESCProject into yufei
+=======
+        <activity android:name=".MainActivity">
+>>>>>>> parent of 28f37d2... Merge branch 'yufei' of https://github.com/yufeilim3/ESCProject into yufei
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,11 +37,14 @@
         </activity>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <activity android:name=".MainActivity" />
         <activity android:name=".CourseActivity" />
 =======
 >>>>>>> yuanzhi
         <activity android:name=".SignupActivity" android:theme="@style/AppTheme.Dark"></activity>
+=======
+>>>>>>> parent of 28f37d2... Merge branch 'yufei' of https://github.com/yufeilim3/ESCProject into yufei
 =======
 >>>>>>> parent of 28f37d2... Merge branch 'yufei' of https://github.com/yufeilim3/ESCProject into yufei
     </application>
