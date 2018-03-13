@@ -1,56 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-=======
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
->>>>>>> yuanzhi
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.escproject.CourseActivity">
 
-<<<<<<< HEAD
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="36dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="36dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:text="Courses" />
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_course1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="12dp"
-            android:padding="12dp"
-            android:gravity="left"
-            android:text="50.003\n Elements of Software Construction"/>
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_course2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:padding="12dp"
-            android:gravity="left"
-            android:text="50.005\n Computer System Engineering"/>
-
-    </LinearLayout>
-
-</ScrollView>
-=======
     <TabHost
         android:id="@+id/tabHost"
         android:layout_width="match_parent"
@@ -210,4 +166,5 @@
     </TabHost>
 
 </RelativeLayout>
->>>>>>> yuanzhi
+
+

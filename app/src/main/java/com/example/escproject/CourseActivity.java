@@ -2,10 +2,6 @@ package com.example.escproject;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-<<<<<<< HEAD
-
-public class CourseActivity extends AppCompatActivity {
-=======
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,14 +17,12 @@ public class CourseActivity extends AppCompatActivity {
     EditText adminCourseEditText, instrCourseEditText, stud1CourseEditText, stud2CourseEditText;
 
     int courseCounter = 0;
->>>>>>> yuanzhi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
+
         setContentView(R.layout.activity_course);
-=======
         setContentView(R.layout.activity_main);
 
         tabs = (TabHost) findViewById(R.id.tabHost);
@@ -135,6 +129,5 @@ public class CourseActivity extends AppCompatActivity {
                 stud2CourseEditText.setText("");
             }
         });
->>>>>>> yuanzhi
     }
 }

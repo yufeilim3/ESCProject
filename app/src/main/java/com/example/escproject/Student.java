@@ -1,66 +1,7 @@
 package com.example.escproject;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.List;
-
-public class Student implements User{
-    int ID;
-    String name;
-    List<Course> courses;
-    Course state;
-    List<List<String>> answers;
-    List<Double> grades;
-
-    public Course getState() {
-        return state;
-    }
-
-    public void setState(Course state) {
-        this.state = state;
-    }
-
-    public List<List<String>> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<List<String>> answers) {
-        this.answers = answers;
-    }
-
-    public List<Double> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(List<Double> grades) {
-        this.grades = grades;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-
 
 public class Student implements User{
     final int ID;
@@ -123,27 +64,17 @@ public class Student implements User{
         return courses;
     }
 
->>>>>>> yuanzhi
     @Override
     public void addCourse(Course course) {
         courses.add(course);
+        course.students.add(this);
     }
 
-<<<<<<< HEAD
-    public void answerQuiz(Quiz quiz){
-
-    }
-<<<<<<< HEAD
-    
-    public void addFeedback(String slides, int page, String content) {
-        Feedback f = new Feedback(slides, page, content, this);
-    }
-=======
     void answerQuiz(Quiz quiz){
         quiz.updateGrade(this);
         quizState = null;
     }
-    
+
     void addFeedback(String slides, int page, String content) {
         Feedback f = new Feedback(slides, page, content, this);
     }
@@ -155,7 +86,4 @@ public class Student implements User{
         }
         return output;
     }
->>>>>>> yuanzhi
-=======
->>>>>>> parent of 8456c2d... Merge branch 'yufei' of https://github.com/yufeilim3/ESCProject into yufei
 }
