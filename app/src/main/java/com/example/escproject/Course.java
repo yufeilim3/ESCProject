@@ -1,6 +1,9 @@
 package com.example.escproject;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+>>>>>>> weian
 import java.util.List;
 
 public class Course {

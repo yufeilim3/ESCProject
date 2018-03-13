@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.escproject">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+<<<<<<< HEAD
         <activity android:name=".CourseActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +28,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignupActivity" android:theme="@style/AppTheme.Dark"></activity>
+=======
+        <activity android:name=".CourseActivity" />
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".ResetpasswordActivity"
+            android:theme="@style/AppTheme.Dark" ></activity>
+>>>>>>> weian
     </application>
 
 </manifest>
