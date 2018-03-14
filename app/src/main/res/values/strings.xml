@@ -18,4 +18,7 @@
     <string name="ResetPassword">Reset Password</string>
     <string name="Back">Back to Login</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>

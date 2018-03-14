@@ -2,24 +2,30 @@ package com.example.escproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private FirebaseAuth auth;
+    private DatabaseReference databaseReference;
 
     TextInputEditText emailText;
     TextInputEditText passwordText;
@@ -32,15 +38,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Get Firebase auth instance
+        // Instantiate widgets and firebase
         auth = FirebaseAuth.getInstance();
-
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         emailText = findViewById(R.id.input_email);
         passwordText = findViewById(R.id.input_password);
         loginButton = findViewById(R.id.btn_login);
         signupLink = findViewById(R.id.link_signup);
         resetpassword = findViewById(R.id.link_resetpassword);
 
+        // check if the user is already logged in
+        if (auth.getCurrentUser()!=null){
+            Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        // Execute when login is pressed, goes to course page
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,17 +62,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /* Execute when resetpassword link pressed, goes to the resetpassword page */
+        // Execute when resetpassword link pressed, goes to the resetpassword page
         resetpassword.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent intent = new Intent(getApplicationContext(), ResetpasswordActivity.class);
-                 startActivity(intent);
-                 finish();
-             }
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ResetpasswordActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
-        /* Execute when signup link pressed, goes to the signup page */
+        // Execute when signup link pressed, goes to the signup page
         signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,80 +93,45 @@ public class LoginActivity extends AppCompatActivity {
         // prevent user from logging in again
         loginButton.setEnabled(false);
 
-        new loginTask().execute();
-
-    }
-
-    ProgressDialog progressDialog = null;
-
-    // shown to user while authenticating the email and password
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
-            progressDialog.setMessage("Authenticating...");
-            progressDialog.setIndeterminate(false);
-            progressDialog.setCancelable(false);
-        }
+        // shown to user while authenticating the email and password
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
         progressDialog.show();
-    }
 
-    private void dismissProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }
 
-    @Override
-    protected void onDestroy() {
-        dismissProgressDialog();
-        super.onDestroy();
-    }
+        String email = emailText.getText().toString();
+        String password = passwordText.getText().toString();
 
-    class loginTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            String email = emailText.getText().toString();
-            String password = passwordText.getText().toString();
-
-            // Login authentication
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (!task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "Authentication failed, check your email and password or sign up", Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
-                        startActivity(intent);
-                        finish();
-                        Toast.makeText(getApplicationContext(),"Login successful", Toast.LENGTH_SHORT).show();
+        // Login authentication
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    try{
+                        throw task.getException();
+                    }catch (FirebaseException e){
+                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                    } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
                     }
                 }
-            });
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void avoid) {
-            if (LoginActivity.this.isDestroyed()) {
-                return;
+                else {
+                    Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(),"Login Successful", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            loginButton.setEnabled(true);
-                            finish();
-                            dismissProgressDialog();
-                        }
-                    }, 3000);
-
-        }
+        });
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        loginButton.setEnabled(true);
+                    }
+                }, 3000);
     }
 
     /* Check if email is of correct form && password is of correct length */
