@@ -78,9 +78,11 @@ public class ResetpasswordActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(ResetpasswordActivity.this, "Please check your email for instructions to reset your password", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                 }
                 else {
                     Toast.makeText(ResetpasswordActivity.this, "Failed to send email to reset password", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -89,8 +91,6 @@ public class ResetpasswordActivity extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
                         resetpasswordButton.setEnabled(true);
-                        finish();
-                        progressDialog.dismiss();
                     }
                 }, 3000);
     }

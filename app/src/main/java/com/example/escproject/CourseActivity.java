@@ -1,15 +1,29 @@
 package com.example.escproject;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class CourseActivity extends AppCompatActivity {
+    private FirebaseAuth auth;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private NavigationView navigationView;
     TabHost tabs;
     Button adminCreateCourseButton, adminDeleteCourseButton, instrAddCourseButton,
             instrChangeCourseButton, instrPostQuizButton, stud1AddCourseButton, stud2AddCourseButton;
@@ -21,9 +35,41 @@ public class CourseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_course);
-        setContentView(R.layout.activity_main);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_course);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.nav_logout:
+                        auth.signOut();
+                        Toast.makeText(getApplicationContext(),"Logout Successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(CourseActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser()==null){
+            Intent intent = new Intent(CourseActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        FirebaseUser user = auth.getCurrentUser();
 
         tabs = (TabHost) findViewById(R.id.tabHost);
         tabs.setup();
@@ -43,7 +89,6 @@ public class CourseActivity extends AppCompatActivity {
         tabSpec.setContent(R.id.stud_2);
         tabSpec.setIndicator("STUD_2");
         tabs.addTab(tabSpec);
-
 
         adminCreateCourseButton = findViewById(R.id.adminCreateCourseButton);
         adminDeleteCourseButton = findViewById(R.id.adminDeleteCourseButton);
@@ -66,6 +111,8 @@ public class CourseActivity extends AppCompatActivity {
         final Instructor instructor = new Instructor(1, "instr");
         final Student student1 = new Student(2, "stud1");
         final Student student2 = new Student(3, "stud2");
+
+
 
         adminCreateCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,5 +176,13 @@ public class CourseActivity extends AppCompatActivity {
                 stud2CourseEditText.setText("");
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        if (actionBarDrawerToggle.onOptionsItemSelected(menuItem)){
+            return true;
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 }

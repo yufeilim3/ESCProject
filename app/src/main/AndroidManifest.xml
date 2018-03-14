@@ -20,23 +20,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-<<<<<<< HEAD
         <activity android:name=".CourseActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignupActivity" android:theme="@style/AppTheme.Dark"></activity>
-=======
-        <activity android:name=".CourseActivity" />
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".ResetpasswordActivity"
-            android:theme="@style/AppTheme.Dark" ></activity>
->>>>>>> weian
+            android:theme="@style/AppTheme.Dark" />
     </application>
 
 </manifest>

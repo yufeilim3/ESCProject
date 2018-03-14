@@ -87,12 +87,13 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
-                    Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
                 else {
+                    progressDialog.dismiss();
                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    finish();
                     Toast.makeText(getApplicationContext(),"Account Created", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -103,8 +104,6 @@ public class SignupActivity extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
                         signupButton.setEnabled(true);
-                        finish();
-                        progressDialog.dismiss();
                     }
                 }, 3000);
     }

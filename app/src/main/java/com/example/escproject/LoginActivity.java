@@ -2,6 +2,7 @@ package com.example.escproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -26,22 +28,21 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText passwordText;
     Button loginButton;
     TextView signupLink;
-<<<<<<< HEAD
-    TextView resetPassword;
-=======
     TextView resetpassword;
->>>>>>> weian
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-<<<<<<< HEAD
-=======
         // Get Firebase auth instance
->>>>>>> weian
         auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser()!=null){
+            Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         emailText = findViewById(R.id.input_email);
         passwordText = findViewById(R.id.input_password);
@@ -58,12 +59,12 @@ public class LoginActivity extends AppCompatActivity {
 
         /* Execute when resetpassword link pressed, goes to the resetpassword page */
         resetpassword.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent intent = new Intent(getApplicationContext(), ResetpasswordActivity.class);
-                 startActivity(intent);
-                 finish();
-             }
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ResetpasswordActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         /* Execute when signup link pressed, goes to the signup page */
@@ -93,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
+
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
 
@@ -101,7 +103,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Authentication failed, check your email and password or sign up", Toast.LENGTH_LONG).show();
+                    try{
+                        throw task.getException();
+                    }catch (FirebaseException e){
+                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                    } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                    }
                 }
                 else {
                     Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
@@ -115,8 +125,6 @@ public class LoginActivity extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
                         loginButton.setEnabled(true);
-                        finish();
-                        progressDialog.dismiss();
                     }
                 }, 3000);
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.escproject.CourseActivity">
+    tools:context="com.example.escproject.CourseActivity"
+    android:id="@+id/drawer_course">
 
     <TabHost
         android:id="@+id/tabHost"
@@ -165,6 +165,12 @@
         </LinearLayout>
     </TabHost>
 
-</RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:layout_width= "match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigation_view"
+        app:menu="@menu/nav_course"
+        android:layout_gravity="start"
+        />
 
-
+</android.support.v4.widget.DrawerLayout>

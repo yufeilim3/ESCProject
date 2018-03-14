@@ -13,13 +13,13 @@
     <string name="Signup">Sign Up</string>
     <string name="Have_account">Already a member? Login</string>
 
-<<<<<<< HEAD
-</resources>
-=======
     <string name="forgotpassword">Forgot password?</string>
     <string name="forgotpasswordtext">Please provide us with your registered email to receive your password reset instructions</string>
     <string name="ResetPassword">Reset Password</string>
     <string name="Back">Back to Login</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>
->>>>>>> weian
+
