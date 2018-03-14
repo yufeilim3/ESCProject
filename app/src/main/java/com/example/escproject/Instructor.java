@@ -1,42 +1,46 @@
 package com.example.escproject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Instructor implements User{
-    int ID;
-    String name;
+    final String instrID;
+    final String name;
     List<Course> courses;
     Course state;
 
-    public int getID() {
-        return ID;
+    //initialize a instructor account
+    Instructor(String ID, String name) {
+        this.instrID = ID;
+        this.name = name;
+        this.courses = new ArrayList<>();
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    //load a instructor account from database
+    Instructor(String ID, String name, List<Course> courses, Course state) {
+        this.instrID = ID;
+        this.name = name;
+        this.courses = courses;
+        this.state = state;
     }
 
-    public String getName() {
+    String getID() {
+        return instrID;
+    }
+
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Course> getCourses() {
+    List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public Course getState() {
+    Course getState() {
         return state;
     }
 
-    public void setState(Course state) {
+    void setState(Course state) {
         this.state = state;
     }
 
@@ -46,7 +50,9 @@ public class Instructor implements User{
         course.instructors.add(this);
     }
 
-    public void postQuiz(Quiz quiz, List<Student> studentList){
-
+    void postQuiz(Quiz quiz, Course course) {
+        for (Student s : course.getStudents()) {
+            s.setQuizState(quiz);
+        }
     }
 }

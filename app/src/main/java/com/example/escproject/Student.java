@@ -1,61 +1,67 @@
 package com.example.escproject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student implements User{
-    int ID;
-    String name;
+    final String studID;
+    final String name;
     List<Course> courses;
     Course state;
+    Quiz quizState;
     List<List<String>> answers;
     List<Double> grades;
 
-    public Course getState() {
-        return state;
+    //initialize a student account
+    Student(String ID, String name) {
+        this.studID = ID;
+        this.name = name;
+        this.courses = new ArrayList<>();
     }
 
-    public void setState(Course state) {
-        this.state = state;
-    }
-
-    public List<List<String>> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<List<String>> answers) {
+    //load a student account from database
+    Student(String ID, String name, List<Course> courses, List<List<String>> answers, List<Double> grades) {
+        this.studID = ID;
+        this.name = name;
+        this.courses = courses;
         this.answers = answers;
-    }
-
-    public List<Double> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(List<Double> grades) {
         this.grades = grades;
     }
 
-    public int getID() {
-        return ID;
+    Quiz getQuizState() {
+        return quizState;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    void setQuizState(Quiz quizState) {
+        this.quizState = quizState;
     }
 
-    public String getName() {
+    Course getState() {
+        return state;
+    }
+
+    void setState(Course state) {
+        this.state = state;
+    }
+
+    List<List<String>> getAnswers() {
+        return answers;
+    }
+
+    List<Double> getGrades() {
+        return grades;
+    }
+
+    String getID() {
+        return studID;
+    }
+
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Course> getCourses() {
+    List<Course> getCourses() {
         return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
     }
 
     @Override
@@ -64,11 +70,20 @@ public class Student implements User{
         course.students.add(this);
     }
 
-    public void answerQuiz(Quiz quiz){
-
+    void answerQuiz(Quiz quiz){
+        quiz.updateGrade(this);
+        quizState = null;
     }
-    
-    public void addFeedback(String slides, int page, String content) {
+
+    void addFeedback(String slides, int page, String content) {
         Feedback f = new Feedback(slides, page, content, this);
+    }
+
+    String quizzesToString() {
+        String output = "";
+        for (Quiz q : state.quizzes) {
+            output += "Quiz " + q.getID() + "\n";
+        }
+        return output;
     }
 }

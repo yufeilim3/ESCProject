@@ -1,18 +1,24 @@
 package com.example.escproject;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz {
-    private int ID;
+    final int ID;
     Course course;
     List<Question> questions;
-    //List<Answer> answers;
 
-    public Quiz(String name, Course course, List<String> questions, List<String> answers, List<Double> points, int ID) {
+    Quiz(Course course, List<String> questions, List<String> answers, List<Double> points, int ID) {
         this.course = course;
         parseQuestions(questions, answers, points);
         this.ID = ID;
+    }
+
+    Quiz(int ID, Course course) {
+        this.ID = ID;
+        this.course = course;
+        questions = new ArrayList<>();
     }
 
     private void parseQuestions(List<String> questions, List<String> answers, List<Double> points) {
@@ -24,6 +30,9 @@ public class Quiz {
     }
 
     public void calculateGrade(Student student) {
+
+    }
+    void updateGrade(Student student) {
         List<String> answer = student.answers.get(student.answers.size()-1);
         double grade = 0;
         for(int i=0;i<questions.size();i++) {
