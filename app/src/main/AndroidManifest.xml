@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout"
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +25,11 @@
         <activity android:name=".CourseActivity" />
         <activity
             android:name=".SignupActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout"
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".ResetpasswordActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout"
             android:theme="@style/AppTheme.Dark" ></activity>
     </application>
 

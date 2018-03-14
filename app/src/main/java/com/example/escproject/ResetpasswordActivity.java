@@ -2,6 +2,7 @@ package com.example.escproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -64,35 +65,78 @@ public class ResetpasswordActivity extends AppCompatActivity {
         // prevent user from resetting again
         resetpasswordButton.setEnabled(false);
 
-        // shown to user while sending email
-        final ProgressDialog progressDialog = new ProgressDialog(ResetpasswordActivity.this, R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Sending email...");
+        new resetpasswordTask().execute();
+
+    }
+
+    ProgressDialog progressDialog = null;
+
+    // shown to user while sending email
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(ResetpasswordActivity.this, R.style.AppTheme_Dark_Dialog);
+            progressDialog.setMessage("Sending email...");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setCancelable(false);
+        }
         progressDialog.show();
+    }
 
-        String email = emailText.getText().toString();
+    private void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
 
-        // Login authentication
-        auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(ResetpasswordActivity.this, "Please check your email for instructions to reset your password", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(ResetpasswordActivity.this, "Failed to send email to reset password", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
+    }
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        resetpasswordButton.setEnabled(true);
+    class resetpasswordTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            showProgressDialog();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String email = emailText.getText().toString();
+
+            // Send email
+            auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Intent intent = new Intent(ResetpasswordActivity.this, LoginActivity.class);
+                        startActivity(intent);
                         finish();
-                        progressDialog.dismiss();
+                        Toast.makeText(ResetpasswordActivity.this, "Please check your email for instructions to reset your password", Toast.LENGTH_LONG).show();
                     }
-                }, 3000);
+                    else {
+                        Toast.makeText(ResetpasswordActivity.this, "Failed to send email to reset password", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void avoid) {
+            if (ResetpasswordActivity.this.isDestroyed()) {
+                return;
+            }
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            resetpasswordButton.setEnabled(true);
+                            finish();
+                            progressDialog.dismiss();
+                        }
+                    }, 3000);
+        }
     }
 
     /* Check if email is of correct form */

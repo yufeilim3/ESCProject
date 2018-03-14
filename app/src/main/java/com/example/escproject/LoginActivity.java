@@ -2,14 +2,13 @@ package com.example.escproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,38 +79,80 @@ public class LoginActivity extends AppCompatActivity {
         // prevent user from logging in again
         loginButton.setEnabled(false);
 
-        // shown to user while authenticating the email and password
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
+        new loginTask().execute();
+
+    }
+
+    ProgressDialog progressDialog = null;
+
+    // shown to user while authenticating the email and password
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
+            progressDialog.setMessage("Authenticating...");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setCancelable(false);
+        }
         progressDialog.show();
+    }
 
-        String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
+    private void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
 
-        // Login authentication
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Authentication failed, check your email and password or sign up", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
-                    startActivity(intent);
-                    Toast.makeText(getApplicationContext(),"Login Successful", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-        });
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        loginButton.setEnabled(true);
-                        finish();
-                        progressDialog.dismiss();
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
+    }
+
+    class loginTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            showProgressDialog();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String email = emailText.getText().toString();
+            String password = passwordText.getText().toString();
+
+            // Login authentication
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Authentication failed, check your email and password or sign up", Toast.LENGTH_LONG).show();
                     }
-                }, 3000);
+                    else {
+                        Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(getApplicationContext(),"Login successful", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void avoid) {
+            if (LoginActivity.this.isDestroyed()) {
+                return;
+            }
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            loginButton.setEnabled(true);
+                            finish();
+                            dismissProgressDialog();
+                        }
+                    }, 3000);
+
+        }
     }
 
     /* Check if email is of correct form && password is of correct length */

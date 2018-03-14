@@ -2,6 +2,7 @@ package com.example.escproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -71,42 +72,79 @@ public class SignupActivity extends AppCompatActivity {
         // prevent user from signing up again
         signupButton.setEnabled(false);
 
-        // shown to user while creating their account
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
+        new signupTask().execute();
+
+    }
+
+    ProgressDialog progressDialog = null;
+
+    // shown to user while creating their account
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Dark_Dialog);
+            progressDialog.setMessage("Creating account...");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setCancelable(false);
+        }
         progressDialog.show();
+    }
 
-        String name = nameText.getText().toString();
-        String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
-        String reenterPassword = reenterPasswordText.getText().toString();
+    private void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
 
-        // Create user account
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
-                    Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(), Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                    Toast.makeText(getApplicationContext(),"Account Created", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
+    }
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        signupButton.setEnabled(true);
-                        finish();
-                        progressDialog.dismiss();
+    class signupTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            showProgressDialog();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String email = emailText.getText().toString();
+            String password = passwordText.getText().toString();
+
+            // Create user account
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(SignupActivity.this, "Account creation failed" + task.getException(), Toast.LENGTH_SHORT).show();
                     }
-                }, 3000);
+                    else {
+                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(getApplicationContext(),"Account created", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void avoid) {
+            if (SignupActivity.this.isDestroyed()) {
+                return;
+            }
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            signupButton.setEnabled(true);
+                            finish();
+                            progressDialog.dismiss();
+                        }
+                    }, 3000);
+        }
     }
 
     /* Check if email is of correct form && password is of correct length */
