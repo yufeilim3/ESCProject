@@ -108,11 +108,9 @@ public class CourseActivity extends AppCompatActivity {
 
 
         final Administrator administrator = new Administrator(0, "admin");
-        final Instructor instructor = new Instructor(1, "instr");
-        final Student student1 = new Student(2, "stud1");
-        final Student student2 = new Student(3, "stud2");
-
-
+        final Instructor instructor = new Instructor(Integer.toString(1), "instr");
+        final Student student1 = new Student(Integer.toString(2), "stud1");
+        final Student student2 = new Student(Integer.toString(3), "stud2");
 
         adminCreateCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -73,6 +73,30 @@
                 android:inputType="textPassword"
                 android:hint="@string/ReenterPassword" />
         </android.support.design.widget.TextInputLayout>
+        
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rgroup_signup"
+            android:layout_gravity="center_horizontal">
+            
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student"
+                android:id="@+id/radio_student"
+                android:checked="false"
+                android:onClick="radioRole"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instructor"
+                android:id="@+id/radio_professor"
+                android:checked="false"
+                android:onClick="radioRole"/>
+
+        </RadioGroup>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_signup"

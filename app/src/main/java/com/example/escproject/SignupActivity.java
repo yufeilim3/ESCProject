@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,15 +18,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
-
     private FirebaseAuth auth;
+    private DatabaseReference databaseReference;
 
     TextInputEditText nameText;
     TextInputEditText emailText;
     TextInputEditText passwordText;
     TextInputEditText reenterPasswordText;
+    RadioGroup radioGroup;
+    RadioButton radioButton;
     Button signupButton;
     TextView loginLink;
 
@@ -35,11 +44,12 @@ public class SignupActivity extends AppCompatActivity {
 
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
-
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         nameText = findViewById(R.id.input_name);
         emailText = findViewById(R.id.input_email);
         passwordText = findViewById(R.id.input_password);
         reenterPasswordText = findViewById(R.id.input_reenterPassword);
+        radioGroup = (RadioGroup)findViewById(R.id.rgroup_signup);
         signupButton = findViewById(R.id.btn_signup);
         loginLink = findViewById(R.id.link_login);
 
@@ -59,6 +69,32 @@ public class SignupActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void radioRole(View view){
+        int radioID = radioGroup.getCheckedRadioButtonId();
+        radioButton = findViewById(radioID);
+        Toast.makeText(this, radioButton.getText() + " selected",Toast.LENGTH_SHORT).show();
+    }
+
+    public void saveUserInformation(){
+        String name = nameText.getText().toString();
+        String email = emailText.getText().toString();
+        String password = passwordText.getText().toString();
+        int radioID = radioGroup.getCheckedRadioButtonId();
+        radioButton = findViewById(radioID);
+        FirebaseUser firebaseUser = auth.getCurrentUser();
+        assert firebaseUser != null;
+
+        if (radioButton.getText().equals("Student")){
+            Student student = new Student(firebaseUser.getUid(),name);
+            databaseReference.child("users").child("Student").child(firebaseUser.getUid()).setValue(student);
+        }
+        else if (radioButton.getText().equals("Instructor")){
+            Instructor instructor = new Instructor(firebaseUser.getUid(),name);
+            databaseReference.child("users").child("Instructor").child(firebaseUser.getUid()).setValue(instructor);
+        }
+
     }
 
     /* Execute when signup button pressed + Check information given */
@@ -91,6 +127,7 @@ public class SignupActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                 }
                 else {
+                    saveUserInformation();
                     progressDialog.dismiss();
                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -116,6 +153,7 @@ public class SignupActivity extends AppCompatActivity {
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
         String reenterPassword = reenterPasswordText.getText().toString();
+        int radioID = radioGroup.getCheckedRadioButtonId();
 
         if (name.isEmpty()) {
             nameText.setError("Enter your name");
@@ -138,6 +176,11 @@ public class SignupActivity extends AppCompatActivity {
         }
         else if (!reenterPassword.equals(password)) {
             reenterPasswordText.setError("Password do not match");
+            valid = false;
+        }
+
+        if (radioID == -1){
+            Toast.makeText(this, "Please indicate Student or Instructor", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 

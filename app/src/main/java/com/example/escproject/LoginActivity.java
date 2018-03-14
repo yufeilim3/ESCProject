@@ -19,10 +19,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private FirebaseAuth auth;
+    private DatabaseReference databaseReference;
 
     TextInputEditText emailText;
     TextInputEditText passwordText;
@@ -35,21 +38,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Get Firebase auth instance
+        // Instantiate widgets and firebase
         auth = FirebaseAuth.getInstance();
-
-        if (auth.getCurrentUser()!=null){
-            Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         emailText = findViewById(R.id.input_email);
         passwordText = findViewById(R.id.input_password);
         loginButton = findViewById(R.id.btn_login);
         signupLink = findViewById(R.id.link_signup);
         resetpassword = findViewById(R.id.link_resetpassword);
 
+        // check if the user is already logged in
+        if (auth.getCurrentUser()!=null){
+            Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        // Execute when login is pressed, goes to course page
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /* Execute when resetpassword link pressed, goes to the resetpassword page */
+        // Execute when resetpassword link pressed, goes to the resetpassword page
         resetpassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /* Execute when signup link pressed, goes to the signup page */
+        // Execute when signup link pressed, goes to the signup page
         signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
