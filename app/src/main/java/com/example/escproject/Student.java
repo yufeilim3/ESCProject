@@ -3,8 +3,8 @@ package com.example.escproject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student implements User{
-    final int ID;
+public class Student implements User {
+    final String studID;
     final String name;
     List<Course> courses;
     Course state;
@@ -13,15 +13,15 @@ public class Student implements User{
     List<Double> grades;
 
     //initialize a student account
-    Student(int ID, String name) {
-        this.ID = ID;
+    Student(String ID, String name) {
+        this.studID = ID;
         this.name = name;
         this.courses = new ArrayList<>();
     }
 
     //load a student account from database
-    Student(int ID, String name, List<Course> courses, List<List<String>> answers, List<Double> grades) {
-        this.ID = ID;
+    Student(String ID, String name, List<Course> courses, List<List<String>> answers, List<Double> grades) {
+        this.studID = ID;
         this.name = name;
         this.courses = courses;
         this.answers = answers;
@@ -52,8 +52,8 @@ public class Student implements User{
         return grades;
     }
 
-    int getID() {
-        return ID;
+    String getID() {
+        return studID;
     }
 
     String getName() {

@@ -1,43 +1,33 @@
 package com.example.escproject;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-
-public class CourseActivity extends AppCompatActivity {
+public class AddCourseActivity extends AppCompatActivity {
 	private FirebaseAuth auth;
-	private RecyclerView courseList;
-	private CourseAdapter mAdapter;
-	Student currentUser;
-	Button addCourse;
-	
-	int courseCounter = 0;
+	private TextView courseName, courseID, classID;
+	private EditText editCourseName, editCourseID, editClassID;
+	private Button add;
+	private DatabaseReference databaseReference;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_course);
+		setContentView(R.layout.activity_add_course);
 		
 		auth = FirebaseAuth.getInstance();
 		if (auth.getCurrentUser()==null){
@@ -45,26 +35,29 @@ public class CourseActivity extends AppCompatActivity {
 			startActivity(intent);
 			finish();
 		}
-		FirebaseUser user = auth.getCurrentUser();
-		currentUser = new Student(" ","");
+		databaseReference = FirebaseDatabase.getInstance().getReference();
 		
-		courseList = (RecyclerView) findViewById(R.id.recyclerViewAnime);
-		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-		courseList.setLayoutManager(linearLayoutManager);
-		mAdapter = new CourseAdapter(this, currentUser.courses, this);
-		courseList.setAdapter(mAdapter);
-		
-		addCourse = (Button) findViewById(R.id.add);
-		addCourse.setOnClickListener(new View.OnClickListener() {
+		courseName = findViewById(R.id.course_name);
+		courseID = findViewById(R.id.course_id);
+		classID = findViewById(R.id.class_id);
+		editClassID = findViewById(R.id.edit_class_id);
+		editCourseID = findViewById(R.id.edit_course_id);
+		editCourseName = findViewById(R.id.edit_course_name);
+		add = findViewById(R.id.add);
+		add.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intent = new Intent(CourseActivity.this, AddCourseActivity.class);
-				startActivity(intent);
-				finish();
+				FirebaseUser firebaseUser = auth.getCurrentUser();
+				DatabaseReference database =
+						databaseReference.child("courses")
+								.child(editCourseID.getText().toString())
+								.child(editClassID.getText().toString())
+								.getDatabase().getReference();
+				database.getKey();
 			}
 		});
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -79,7 +72,7 @@ public class CourseActivity extends AppCompatActivity {
 			case R.id.logout:
 				auth.signOut();
 				Toast.makeText(getApplicationContext(),"Logout Successful", Toast.LENGTH_SHORT).show();
-				Intent intent = new Intent(CourseActivity.this,LoginActivity.class);
+				Intent intent = new Intent(AddCourseActivity.this,LoginActivity.class);
 				startActivity(intent);
 				finish();
 				break;

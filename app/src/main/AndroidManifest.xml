@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.escproject">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,17 +16,19 @@
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".CourseActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".SignupActivity" android:theme="@style/AppTheme.Dark"></activity>
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".ResetpasswordActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".CourseActivity" />
+        <activity android:name=".AddCourseActivity"></activity>
     </application>
 
 </manifest>

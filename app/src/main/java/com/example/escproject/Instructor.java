@@ -3,29 +3,29 @@ package com.example.escproject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Instructor implements User{
-    final int ID;
+public class Instructor implements User {
+    final String instrID;
     final String name;
     List<Course> courses;
     Course state;
 
     //initialize a instructor account
-    Instructor(int ID, String name) {
-        this.ID = ID;
+    Instructor(String ID, String name) {
+        this.instrID = ID;
         this.name = name;
         this.courses = new ArrayList<>();
     }
 
     //load a instructor account from database
-    Instructor(int ID, String name, List<Course> courses, Course state) {
-        this.ID = ID;
+    Instructor(String ID, String name, List<Course> courses, Course state) {
+        this.instrID = ID;
         this.name = name;
         this.courses = courses;
         this.state = state;
     }
 
-    int getID() {
-        return ID;
+    String getID() {
+        return instrID;
     }
 
     String getName() {

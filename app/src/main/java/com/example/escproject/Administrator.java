@@ -23,7 +23,7 @@ public class Administrator {
         this.courses = courses;
     }
 
-    void createCourse(int ID, String name, int classID, List<Instructor> instructors, List<Student> students) {
+    void createCourse(String ID, String name, String classID, List<Instructor> instructors, List<Student> students) {
         Course newCourse = new Course(ID, name, classID);
         for (Instructor i : instructors) {
             newCourse.addInstructor(i);
@@ -46,7 +46,7 @@ public class Administrator {
         return output;
     }
 
-    void createCourse(int ID, String name, int classID) {
+    void createCourse(String ID, String name, String classID) {
         courses.add(new Course(ID, name, classID));
     }
 
