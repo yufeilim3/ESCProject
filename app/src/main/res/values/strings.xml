@@ -21,5 +21,10 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
 
+    <string name="courseName">Enter Course Name</string>
+    <string name="courseID">Enter Course ID</string>
+    <string name="classID">Enter Class ID</string>
+    <string name="addCourse">Add Course</string>
+
 </resources>
 

@@ -26,18 +26,15 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
-
     TextInputEditText emailText;
     TextInputEditText passwordText;
     Button loginButton;
     TextView signupLink;
     TextView resetpassword;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         // Instantiate widgets and firebase
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -82,23 +79,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    
     /* Execute when login button pressed + Authenticate login */
     public void login() {
         if (!validate()) {
             loginButton.setEnabled(true);
             return;
         }
-
+        
         // prevent user from logging in again
         loginButton.setEnabled(false);
-
+        
         // shown to user while authenticating the email and password
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
-
 
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
@@ -110,9 +106,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     try{
                         throw task.getException();
-                    }catch (FirebaseException e){
-                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
                     } catch (Exception e) {
                         Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
@@ -133,27 +126,27 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }, 3000);
     }
-
+    
     /* Check if email is of correct form && password is of correct length */
     public boolean validate() {
         boolean valid = true;
-
+        
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
-
+        
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailText.setError("Invalid email address");
             valid = false;
         }
-
+        
         if (password.isEmpty() || password.length() < 6 || password.length() > 10) {
             passwordText.setError("Invalid password");
             valid = false;
         }
-
+        
         return valid;
     }
-
+    
     /* Disable going back to the LoginActivity */
     @Override
     public void onBackPressed() {

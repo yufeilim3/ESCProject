@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
-    private final int ID;
+    final String courID;
     final String name;
-    private final int classID;
+    final String classID;
     List<Quiz> quizzes;
     List<Student> students;
     List<Instructor> instructors;
 
-    public Course(int ID, String name, int classID, List<Student> students, List<Instructor> instructors) {
-        this.ID = ID;
+    Course(String courID, String name, String classID, List<Student> students, List<Instructor> instructors) {
+        this.courID = courID;
         this.name = name;
         this.classID = classID;
         this.students = students;
         this.instructors = instructors;
     }
 
-    Course(int ID, String name, int classID) {
-        this.ID = ID;
+    Course(String courID, String name, String classID) {
+        this.courID = courID;
         this.name = name;
-        this.classID = ID;
+        this.classID = classID;
         this.students = new ArrayList<>();
         this.instructors = new ArrayList<>();
     }
@@ -42,5 +42,12 @@ public class Course {
     List<Student> getStudents() {
         return students;
     }
-}
 
+    public String getCourID() {
+        return courID;
+    }
+
+    public String getName() {
+        return name;
+    }
+}

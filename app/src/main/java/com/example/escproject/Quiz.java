@@ -1,6 +1,5 @@
 package com.example.escproject;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,8 @@ public class Quiz {
         student.grades.add(grade);
     }
 
-    public int getID() {
+
+    int getID() {
         return ID;
     }
 }
