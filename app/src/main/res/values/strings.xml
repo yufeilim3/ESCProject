@@ -17,5 +17,11 @@
     <string name="forgotpasswordtext">Please provide us with your registered email to receive your password reset instructions</string>
     <string name="ResetPassword">Reset Password</string>
     <string name="Back">Back to Login</string>
+    <string name="title_activity_test">testAct</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 </resources>

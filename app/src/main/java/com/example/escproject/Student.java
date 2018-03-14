@@ -3,12 +3,17 @@ package com.example.escproject;
 import java.util.List;
 
 public class Student implements User{
-    int ID;
-    String name;
+    private int ID;
+    private String name;
     List<Course> courses;
     Course state;
     List<List<String>> answers;
     List<Double> grades;
+
+    public Student(int id, String name) {
+        this.ID = id;
+        this.name = name;
+    }
 
     public Course getState() {
         return state;

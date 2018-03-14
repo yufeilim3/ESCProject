@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +17,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -50,12 +55,12 @@ public class LoginActivity extends AppCompatActivity {
 
         /* Execute when resetpassword link pressed, goes to the resetpassword page */
         resetpassword.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent intent = new Intent(getApplicationContext(), ResetpasswordActivity.class);
-                 startActivity(intent);
-                 finish();
-             }
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ResetpasswordActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         /* Execute when signup link pressed, goes to the signup page */
@@ -126,12 +131,26 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
                         Toast.makeText(LoginActivity.this, "Authentication failed, check your email and password or sign up", Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
-                        startActivity(intent);
-                        finish();
-                        Toast.makeText(getApplicationContext(),"Login successful", Toast.LENGTH_SHORT).show();
+                    } else {
+                        FirebaseFirestore.getInstance().collection("users")
+                                .document(auth.getCurrentUser().getDisplayName()).get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                String userType = task.getResult().getString("type");
+                                Intent intent;
+                                if (userType.equals("admin")) {
+                                    intent = new Intent(LoginActivity.this, AdministratorActivity.class);
+                                } else if (userType.equals("instructor")) {
+                                    intent = new Intent(LoginActivity.this, InstructorActivity.class);
+                                } else {
+                                    intent = new Intent(LoginActivity.this, CourseActivity.class);
+                                }
+                                startActivity(intent);
+                                finish();
+                                Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
             });
