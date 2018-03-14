@@ -2,10 +2,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.example.escproject.LoginActivity">
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.example.escproject.AddCourseActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -15,24 +15,17 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView
-            android:src="@drawable/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
-
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/input_email"
+                android:id="@+id/input_courseName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="@string/Email" />
+                android:inputType="textPersonName"
+                android:hint="@string/courseName" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -41,39 +34,36 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/input_password"
+                android:id="@+id/input_courseID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/Password" />
+                android:inputType="textPersonName"
+                android:hint="@string/courseID" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_classID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="@string/classID" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_addCourse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="@string/Login"/>
+            android:text="@string/addCourse"/>
 
-        <TextView
-            android:id="@+id/link_resetpassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:text="@string/Forgot_password"
-            android:gravity="center"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/link_signup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="@string/Signup_account"
-            android:gravity="center"
-            android:textSize="16sp"/>
 
     </LinearLayout>
+
 </ScrollView>

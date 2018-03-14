@@ -29,8 +29,4 @@
         <item name="android:textColorPrimary">@color/iron</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
-
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
