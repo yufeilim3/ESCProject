@@ -76,6 +76,7 @@ public class InstrSlideFragment extends Fragment {
 								Intent intent = new Intent(view.getContext(), InstrViewSlideActivity.class);
 								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 								intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+								InstrViewSlideActivity.state = mAdapter.slides.get(position);
 								startActivity(intent);
 							}
 						}));
@@ -91,7 +92,10 @@ public class InstrSlideFragment extends Fragment {
 		upload_slide.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-			
+				Intent intent = new Intent(view.getContext(), UploadFileActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				startActivity(intent);
 			}
 		});
 		// Inflate the layout for this fragment
