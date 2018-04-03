@@ -34,7 +34,7 @@ public class CourseActivity extends AppCompatActivity {
     static Student currentUser;
     static Instructor currentInstr;
     Button addCourse;
-    static String userType;
+    static String userType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class CourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course);
 
         auth = FirebaseAuth.getInstance();
+        
         if (auth.getCurrentUser()==null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -57,7 +58,7 @@ public class CourseActivity extends AppCompatActivity {
 			    String ID = "";
 			    if(dataSnapshot.child("Student").hasChild(firebaseUser.getUid())) {
 				    name = dataSnapshot.child("Student").child(firebaseUser.getUid()).child("name").getValue().toString();
-				    ID = dataSnapshot.child("Student").child(firebaseUser.getUid()).child("id").getValue().toString();
+				    ID = dataSnapshot.child("Student").child(firebaseUser.getUid()).child("studID").getValue().toString();
 				    userType = "Student";
 				    currentUser = new Student(ID, name);
 				    if(dataSnapshot.child(userType).child(firebaseUser.getUid()).hasChild("Course")) {
@@ -68,7 +69,7 @@ public class CourseActivity extends AppCompatActivity {
 				    }
 			    } else if(dataSnapshot.child("Instructor").hasChild(firebaseUser.getUid())) {
 				    name = dataSnapshot.child("Instructor").child(firebaseUser.getUid()).child("name").getValue().toString();
-				    ID = dataSnapshot.child("Instructor").child(firebaseUser.getUid()).child("id").getValue().toString();
+				    ID = dataSnapshot.child("Instructor").child(firebaseUser.getUid()).child("instrID").getValue().toString();
 				    userType = "Instructor";
 				    currentInstr = new Instructor(ID, name);
 				    if(dataSnapshot.child(userType).child(firebaseUser.getUid()).hasChild("Course")) {

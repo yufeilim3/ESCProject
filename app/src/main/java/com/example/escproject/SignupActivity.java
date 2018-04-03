@@ -86,10 +86,10 @@ public class SignupActivity extends AppCompatActivity {
         assert firebaseUser != null;
 
         if (radioButton.getText().equals("Student")) {
-            Student student = new Student(firebaseUser.getUid(), name);
+            Student student = new Student(firebaseUser.getUid(), name, firebaseUser.getUid());
             databaseReference.child("users").child("Student").child(firebaseUser.getUid()).setValue(student);
         } else if (radioButton.getText().equals("Instructor")) {
-            Instructor instructor = new Instructor(firebaseUser.getUid(), name);
+            Instructor instructor = new Instructor(firebaseUser.getUid(), name, firebaseUser.getUid());
             databaseReference.child("users").child("Instructor").child(firebaseUser.getUid()).setValue(instructor);
         }
     }

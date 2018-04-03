@@ -4,14 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Student implements User{
-    final String studID;
-    final String name;
+    public String studID;
+    public String name;
+    public String id;
     List<Course> courses;
     Course state;
     Quiz quizState;
     List<List<String>> answers;
     List<Double> grades;
-
+    
+    public Student() {
+    }
+    
+    public Student(String studID, String name, String id) {
+        this.studID = studID;
+        this.name = name;
+        this.id = id;
+    }
+    
     //initialize a student account
     Student(String ID, String name) {
         this.studID = ID;

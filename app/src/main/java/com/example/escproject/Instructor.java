@@ -4,12 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Instructor implements User{
-    final String instrID;
-    final String name;
+    public String instrID;
+    public String name;
+    public String id;
     List<Course> courses;
     Course state;
-
-    //initialize a instructor account
+	
+	public Instructor() {
+	}
+	
+	public Instructor(String instrID, String name, String id) {
+		this.instrID = instrID;
+		this.name = name;
+		this.id = id;
+	}
+	
+	//initialize a instructor account
     Instructor(String ID, String name) {
         this.instrID = ID;
         this.name = name;
