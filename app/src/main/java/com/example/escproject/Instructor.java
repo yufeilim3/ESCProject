@@ -3,7 +3,7 @@ package com.example.escproject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Instructor implements User {
+public class Instructor implements User{
     final String instrID;
     final String name;
     List<Course> courses;

@@ -3,7 +3,7 @@ package com.example.escproject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student implements User {
+public class Student implements User{
     final String studID;
     final String name;
     List<Course> courses;
@@ -70,11 +70,6 @@ public class Student implements User {
         course.students.add(this);
     }
 
-    void answerQuiz(Quiz quiz){
-        quiz.updateGrade(this);
-        quizState = null;
-    }
-    
     void addFeedback(String slides, int page, String content) {
         Feedback f = new Feedback(slides, page, content, this);
     }
@@ -82,7 +77,7 @@ public class Student implements User {
     String quizzesToString() {
         String output = "";
         for (Quiz q : state.quizzes) {
-            output += "Quiz " + q.getID() + "\n";
+            output += "Quiz " + q.ID + "\n";
         }
         return output;
     }

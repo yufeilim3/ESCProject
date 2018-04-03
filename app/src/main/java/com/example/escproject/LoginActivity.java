@@ -26,18 +26,15 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
-    
     TextInputEditText emailText;
     TextInputEditText passwordText;
     Button loginButton;
     TextView signupLink;
     TextView resetpassword;
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        
         // Instantiate widgets and firebase
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -46,14 +43,14 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.btn_login);
         signupLink = findViewById(R.id.link_signup);
         resetpassword = findViewById(R.id.link_resetpassword);
-        
+
         // check if the user is already logged in
         if (auth.getCurrentUser()!=null){
             Intent intent = new Intent(LoginActivity.this, CourseActivity.class);
             startActivity(intent);
             finish();
         }
-        
+
         // Execute when login is pressed, goes to course page
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-        
+
         // Execute when resetpassword link pressed, goes to the resetpassword page
         resetpassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-        
+
         // Execute when signup link pressed, goes to the signup page
         signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,11 +95,10 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
-        
-        
+
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
-        
+
         // Login authentication
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -110,9 +106,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     try{
                         throw task.getException();
-                    }catch (FirebaseException e){
-                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
                     } catch (Exception e) {
                         Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();

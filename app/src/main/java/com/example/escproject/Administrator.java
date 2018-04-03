@@ -3,9 +3,6 @@ package com.example.escproject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by 94360 on 2018/2/22.
- */
 
 public class Administrator {
     final int id;

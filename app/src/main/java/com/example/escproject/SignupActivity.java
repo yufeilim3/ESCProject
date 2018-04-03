@@ -41,7 +41,6 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        
         // Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -70,14 +69,14 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     public void radioRole(View view){
         int radioID = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioID);
         Toast.makeText(this, radioButton.getText() + " selected",Toast.LENGTH_SHORT).show();
     }
-    
-    public void saveUserInformation(){
+
+    public void saveUserInformation() {
         String name = nameText.getText().toString();
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
@@ -85,18 +84,15 @@ public class SignupActivity extends AppCompatActivity {
         radioButton = findViewById(radioID);
         FirebaseUser firebaseUser = auth.getCurrentUser();
         assert firebaseUser != null;
-        
-        if (radioButton.getText().equals("Student")){
-            Student student = new Student(firebaseUser.getUid(),name);
+
+        if (radioButton.getText().equals("Student")) {
+            Student student = new Student(firebaseUser.getUid(), name);
             databaseReference.child("users").child("Student").child(firebaseUser.getUid()).setValue(student);
-        }
-        else if (radioButton.getText().equals("Instructor")){
-            Instructor instructor = new Instructor(firebaseUser.getUid(),name);
+        } else if (radioButton.getText().equals("Instructor")) {
+            Instructor instructor = new Instructor(firebaseUser.getUid(), name);
             databaseReference.child("users").child("Instructor").child(firebaseUser.getUid()).setValue(instructor);
         }
-        
     }
-    
     /* Execute when signup button pressed + Check information given */
     public void signup() {
         if (!validate()) {
@@ -117,7 +113,7 @@ public class SignupActivity extends AppCompatActivity {
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
         String reenterPassword = reenterPasswordText.getText().toString();
-        
+
         // Create user account
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -136,7 +132,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
             }
         });
-        
+
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -154,7 +150,7 @@ public class SignupActivity extends AppCompatActivity {
         String password = passwordText.getText().toString();
         String reenterPassword = reenterPasswordText.getText().toString();
         int radioID = radioGroup.getCheckedRadioButtonId();
-        
+
         if (name.isEmpty()) {
             nameText.setError("Enter your name");
             valid = false;
@@ -178,12 +174,12 @@ public class SignupActivity extends AppCompatActivity {
             reenterPasswordText.setError("Password do not match");
             valid = false;
         }
-        
+
         if (radioID == -1){
             Toast.makeText(this, "Please indicate Student or Instructor", Toast.LENGTH_SHORT).show();
             valid = false;
         }
-        
+
         return valid;
     }
 }

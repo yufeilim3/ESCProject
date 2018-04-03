@@ -4,63 +4,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz {
-    final int ID;
+    final String ID;
     Course course;
     List<Question> questions;
-
-    Quiz(Course course, List<String> questions, List<String> answers, List<Double> points, int ID) {
+    
+    Quiz(String ID) {
+	    this.questions = new ArrayList<>();
+        this.ID = ID;
+    }
+    
+    Quiz(Course course, List<Question> questions, String ID) {
         this.course = course;
-        parseQuestions(questions, answers, points);
+	    this.questions = questions;
         this.ID = ID;
     }
 
-    Quiz(int ID, Course course) {
+    Quiz(String ID, Course course) {
         this.ID = ID;
         this.course = course;
         questions = new ArrayList<>();
     }
 
-    private void parseQuestions(List<String> questions, List<String> answers, List<Double> points) {
-        this.questions = new ArrayList<>();
-        int amount = questions.size();
-        for(int i=0;i<amount;i++) {
-            this.questions.add(new Question(questions.get(i), answers.get(i), points.get(i), i));
-        }
-    }
-
-    void updateGrade(Student student) {
-        List<String> answer = student.answers.get(student.answers.size()-1);
-        double grade = 0;
-        for(int i=0;i<questions.size();i++) {
-            if(answer.get(i).equals(questions.get(i).getAnswer())) grade += questions.get(i).points;
-        }
-        student.grades.add(grade);
-    }
-
-    int getID() {
-        return ID;
+    public String calculateGrade(List<String> answers) {
+		double grade = 0;
+		double totalPoint = 0;
+		for(int i=0;i<answers.size();i++) {
+			if(answers.get(i).equals(questions.get(i).getAnswer())) {
+				grade += questions.get(i).point;
+			}
+			totalPoint += questions.get(i).point;
+		}
+		return grade+"/"+totalPoint;
     }
 }
 
 class Question {
-    private int ID;
-    String content;
+    String question;
     private String answer;
-    double points;
-
-    public Question(String content, String answer, double points, int ID) {
+    double point;
+	
+	public Question() {
+	}
+	
+	public Question(String content, String answer, double points) {
         //this.name = name;
-        this.content = content;
-        this.points = points;
-        this.ID = ID;
+        this.question = content;
+        this.point = points;
         this.answer = answer;
     }
 
     public String getAnswer() {
         return answer;
     }
-
-    public int getID() {
-        return ID;
-    }
+	
 }

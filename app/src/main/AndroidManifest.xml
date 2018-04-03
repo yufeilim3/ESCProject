@@ -22,13 +22,26 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity
+            android:name=".CourseActivity"
+            android:label="My Coureses" />
+        <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".ResetpasswordActivity"
             android:theme="@style/AppTheme.Dark" />
-        <activity android:name=".CourseActivity" />
-        <activity android:name=".AddCourseActivity"></activity>
+        <activity
+            android:name=".AddCourseActivity"
+            android:label="Adding Course"
+            android:parentActivityName=".CourseActivity" />
+        <activity
+            android:name=".MyCourseActivity"
+            android:label="Math"
+            android:parentActivityName=".CourseActivity" />
+        <activity android:name=".MyQuizActivity" />
+        <activity android:name=".InstrCourseActivity" />
+        <activity android:name=".InstrQuizActivity" />
+        <activity android:name=".NewQuizActivity"></activity>
     </application>
 
 </manifest>

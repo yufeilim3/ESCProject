@@ -14,15 +14,13 @@ import java.util.List;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
 
-    private List<Course> courses;
+    List<Course> courses;
     private static int viewHolderCount = 0;
-    CourseActivity pa;
     Context parentContext;
 
-    CourseAdapter(Context context, List<Course> courses, CourseActivity pa){
+    CourseAdapter(Context context, List<Course> courses){
         this.parentContext = context;
         this.courses = courses;
-        this.pa = pa;
     }
 
     @Override

@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
-    final String courID;
-    final String name;
-    final String classID;
+    String courID;
+    String name;
+    String classID;
     List<Quiz> quizzes;
     List<Student> students;
     List<Instructor> instructors;
-
-    Course(String courID, String name, String classID, List<Student> students, List<Instructor> instructors) {
+	
+	public Course() {
+	}
+	
+	Course(String courID, String name, String classID, List<Student> students, List<Instructor> instructors, List<Quiz> quizzes) {
         this.courID = courID;
         this.name = name;
         this.classID = classID;
         this.students = students;
         this.instructors = instructors;
+        this.quizzes = quizzes;
     }
 
     Course(String courID, String name, String classID) {
@@ -25,6 +29,7 @@ public class Course {
         this.classID = classID;
         this.students = new ArrayList<>();
         this.instructors = new ArrayList<>();
+        this.quizzes = new ArrayList<>();
     }
 
     void addInstructor(Instructor instructor) {
@@ -42,13 +47,12 @@ public class Course {
     List<Student> getStudents() {
         return students;
     }
-    
+
     public String getCourID() {
         return courID;
     }
-    
+
     public String getName() {
         return name;
     }
 }
-
