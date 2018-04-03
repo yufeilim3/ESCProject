@@ -55,7 +55,7 @@ public class InstrQuizFragment extends Fragment {
 		databaseReference.child("Courses")
 				.child(InstrCourseActivity.state.courID)
 				.child("Quiz")
-				.addValueEventListener(new ValueEventListener() {
+				.addListenerForSingleValueEvent(new ValueEventListener() {
 					@Override
 					public void onDataChange(DataSnapshot dataSnapshot) {
 						quizzes = new ArrayList<>();
@@ -83,6 +83,8 @@ public class InstrQuizFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 				Intent intent = new Intent(view.getContext(), NewQuizActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 				startActivity(intent);
 			}
 		});

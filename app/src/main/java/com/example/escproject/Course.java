@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
-    String courID;
-    String name;
-    String classID;
+    public String courID;
+    public String name;
+    public String classID;
     List<Quiz> quizzes;
     List<Student> students;
     List<Instructor> instructors;

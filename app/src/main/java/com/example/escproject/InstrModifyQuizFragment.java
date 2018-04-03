@@ -1,12 +1,14 @@
 package com.example.escproject;
 
+
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,26 +23,32 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class NewQuizActivity extends AppCompatActivity {
-	static Quiz state;
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class InstrModifyQuizFragment extends Fragment {
 	private FirebaseAuth auth;
 	private RecyclerView questionList;
 	private QuestionUploadAdapter mAdapter;
 	private FirebaseUser firebaseUser;
 	private DatabaseReference databaseReference;
 	Button submitButton;
-	Button addQuestion;
+	
+	public InstrModifyQuizFragment() {
+		// Required empty public constructor
+	}
+	
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_quiz);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		final View view = inflater.inflate(R.layout.fragment_instr_modify_quiz, container, false);
 		
 		auth = FirebaseAuth.getInstance();
 		if (auth.getCurrentUser()==null){
-			Intent intent = new Intent(this, LoginActivity.class);
+			Intent intent = new Intent(view.getContext(), LoginActivity.class);
 			startActivity(intent);
-			finish();
 		}
 		
 		firebaseUser = auth.getCurrentUser();
@@ -48,25 +56,27 @@ public class NewQuizActivity extends AppCompatActivity {
 		databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
+				List<Question> questions = new ArrayList<>();
 				Iterator<DataSnapshot> itr = dataSnapshot.child("Courses")
 						.child(InstrCourseActivity.state.courID)
-						.child("Quiz").getChildren().iterator();
-				int max = 0;
+						.child("Quiz")
+						.child(InstrQuizActivity.state.ID).getChildren().iterator();
 				while(itr.hasNext()) {
-					int temp = Integer.parseInt(itr.next().getKey());
-					if(temp>max) max = temp;
+					try {
+						Question tmp = itr.next().getValue(Question.class);
+						questions.add(tmp);
+					} catch (Exception ex) {
+					
+					}
 				}
-				max++;
-				final int newQuiz = max;
-				if(state == null) state = new Quiz(String.valueOf(newQuiz), "closed");
-				state.questions.add(new Question("", "", 0));
-				questionList = findViewById(R.id.recyclerViewQuestion);
-				LinearLayoutManager linearLayoutManager = new LinearLayoutManager(NewQuizActivity.this);
+				InstrQuizActivity.state.questions = questions;
+				questionList = view.findViewById(R.id.recyclerViewQuestion);
+				LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
 				questionList.setLayoutManager(linearLayoutManager);
-				mAdapter = new QuestionUploadAdapter(NewQuizActivity.this, state.questions);
+				mAdapter = new QuestionUploadAdapter(view.getContext(), questions);
 				questionList.setAdapter(mAdapter);
 				
-				submitButton = findViewById(R.id.btn_submit);
+				submitButton = view.findViewById(R.id.btn_submit);
 				submitButton.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
@@ -74,26 +84,16 @@ public class NewQuizActivity extends AppCompatActivity {
 						DatabaseReference quizRef = databaseReference.child("Courses")
 								.child(InstrCourseActivity.state.courID)
 								.child("Quiz")
-								.child(String.valueOf(newQuiz));
-						for(int i=0;i<state.questions.size();i++) {
-							quizRef.child(String.valueOf(i+1)).setValue(state.questions.get(i));
-							totalPoint += state.questions.get(i).point;
+								.child(InstrQuizActivity.state.ID);
+						for(int i=0;i<InstrQuizActivity.state.questions.size();i++) {
+							quizRef.child(String.valueOf(i+1)).setValue(InstrQuizActivity.state.questions.get(i));
+							totalPoint += InstrQuizActivity.state.questions.get(i).point;
 						}
 						quizRef.child("grade").setValue(totalPoint);
-						quizRef.child("state").setValue("closed");
-						Intent intent = new Intent(NewQuizActivity.this, InstrCourseActivity.class);
+						Intent intent = new Intent(view.getContext(), InstrCourseActivity.class);
 						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 						startActivity(intent);
-					}
-				});
-				
-				addQuestion = findViewById(R.id.btn_addQuestion);
-				addQuestion.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						state.questions.add(new Question("", "", 0));
-						mAdapter.notifyDataSetChanged();
 					}
 				});
 			}
@@ -101,5 +101,7 @@ public class NewQuizActivity extends AppCompatActivity {
 			public void onCancelled(DatabaseError databaseError) {
 			}
 		});
+		return view;
 	}
+	
 }

@@ -97,8 +97,10 @@ public class CourseActivity extends AppCompatActivity {
 				    		intent = new Intent(CourseActivity.this, MyCourseActivity.class);
 						    MyCourseActivity.state = mAdapter.courses.get(position);
 					    }
+					    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 					    startActivity(intent);
-					    finish();
+					    //finish();
 				    }
 			    }));
 		    }
@@ -114,7 +116,7 @@ public class CourseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(CourseActivity.this, AddCourseActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
     }

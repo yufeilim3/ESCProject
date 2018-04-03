@@ -81,7 +81,7 @@ public class AddCourseActivity extends AppCompatActivity {
 							Toast.makeText(AddCourseActivity.this, "Add course successfully", Toast.LENGTH_LONG).show();
 							Intent intent = new Intent(AddCourseActivity.this, CourseActivity.class);
 							startActivity(intent);
-							finish();
+							//finish();
 						} else Toast.makeText(AddCourseActivity.this, "No such class from this course", Toast.LENGTH_LONG).show();
 					}
 					@Override

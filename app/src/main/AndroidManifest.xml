@@ -37,11 +37,18 @@
         <activity
             android:name=".MyCourseActivity"
             android:label="Math"
-            android:parentActivityName=".CourseActivity" />
+            android:parentActivityName=".CourseActivity"></activity>
         <activity android:name=".MyQuizActivity" />
-        <activity android:name=".InstrCourseActivity" />
-        <activity android:name=".InstrQuizActivity" />
-        <activity android:name=".NewQuizActivity"></activity>
+        <activity
+            android:name=".InstrCourseActivity"
+            android:parentActivityName=".CourseActivity" />
+        <activity
+            android:name=".InstrQuizActivity"
+            android:parentActivityName=".InstrCourseActivity" />
+        <activity
+            android:name=".NewQuizActivity"
+            android:parentActivityName=".InstrCourseActivity" />
+        <activity android:name=".InstrViewSlideActivity"></activity>
     </application>
 
 </manifest>

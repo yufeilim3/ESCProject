@@ -87,6 +87,8 @@ public class QuizFragment extends Fragment {
 										if(dataSnapshot.hasChild(mAdapter.quizzes.get(position).ID)||mAdapter.quizzes.get(position).state.equals("open")) {
 											Intent intent = new Intent(view.getContext(), MyQuizActivity.class);
 											MyQuizActivity.state = new Quiz(mAdapter.quizzes.get(position).ID, MyCourseActivity.state);
+											intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+											intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 											startActivity(intent);
 										} else {
 											Toast.makeText(view.getContext(),"This quiz is closed now", Toast.LENGTH_LONG).show();

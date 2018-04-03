@@ -75,6 +75,8 @@ public class InstrOtherFragment extends Fragment {
 							@Override
 							public void onItemClick(View view, int position) {
 								Intent intent = new Intent(view.getContext(), MyCourseActivity.class);
+								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+								intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 								startActivity(intent);
 							}
 						}));

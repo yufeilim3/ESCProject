@@ -85,6 +85,8 @@ public class MyQuizActivity extends AppCompatActivity {
 						@Override
 						public void onClick(View view) {
 							Intent intent = new Intent(MyQuizActivity.this, MyCourseActivity.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 							startActivity(intent);
 						}
 					});
