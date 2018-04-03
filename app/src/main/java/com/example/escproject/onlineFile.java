@@ -5,9 +5,9 @@ package com.example.escproject;
  */
 
 public class onlineFile {
-	String name;
-	String address;
-	String type;
+	public String name;
+	public String address;
+	public String type;
 	
 	public onlineFile(String name, String address, String type) {
 		this.name = name;

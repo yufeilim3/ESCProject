@@ -2,6 +2,10 @@ package com.example.escproject;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +19,10 @@ public class QuestionUploadAdapter extends RecyclerView.Adapter<QuestionUploadAd
 	List<Question> questions;
 	private  int viewHolderCount = 0;
 	Context parentContext;
-	List<EditText> edit_answers;
-	List<EditText> edit_questions;
-	List<EditText> edit_points;
 	
 	QuestionUploadAdapter(Context context, List<Question> questions){
 		this.parentContext = context;
 		this.questions = questions;
-		edit_answers = new ArrayList<>();
-		edit_points = new ArrayList<>();
-		edit_questions = new ArrayList<>();
 	}
 	
 	@Override
@@ -35,9 +33,6 @@ public class QuestionUploadAdapter extends RecyclerView.Adapter<QuestionUploadAd
 		View view = inflater.inflate(layoutIDForListItem,parent,shouldAttachToParentImmediately);
 		QuestionUploadViewHolder ViewHolder = new QuestionUploadViewHolder(view);
 		viewHolderCount++;
-		edit_answers.add(ViewHolder.answer);
-		edit_questions.add(ViewHolder.question);
-		edit_points.add(ViewHolder.point);
 		return ViewHolder;
 	}
 	
@@ -65,13 +60,67 @@ public class QuestionUploadAdapter extends RecyclerView.Adapter<QuestionUploadAd
 			title = v.findViewById(R.id.title);
 		}
 		
-		public void bind(int position ){
+		public void bind(final int position ){
 			String text = questions.get(position).question;
-			String answer = questions.get(position).getAnswer();
+			String answertext = questions.get(position).answer;
 			title.setText("Question "+(position+1)+": ");
 			point.setText(String.valueOf(questions.get(position).point));
 			question.setText(text);
-			this.answer.setText(answer);
+			answer.setText(answertext);
+			question.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				
+				}
+				
+				@Override
+				public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+					if(charSequence.length()!=0) {
+						questions.get(position).question = question.getText().toString().trim();
+					}
+				}
+				
+				@Override
+				public void afterTextChanged(Editable editable) {
+				
+				}
+			});
+			answer.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				
+				}
+				
+				@Override
+				public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+					if(charSequence.length()!=0) {
+						questions.get(position).answer = answer.getText().toString().trim();
+					}
+				}
+				
+				@Override
+				public void afterTextChanged(Editable editable) {
+				
+				}
+			});
+			point.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				
+				}
+				
+				@Override
+				public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+					if(charSequence.length()!=0) {
+						questions.get(position).point = Double.parseDouble(point.getText().toString().trim());
+					}
+				}
+				
+				@Override
+				public void afterTextChanged(Editable editable) {
+				
+				}
+			});
 		}
 	}
 }

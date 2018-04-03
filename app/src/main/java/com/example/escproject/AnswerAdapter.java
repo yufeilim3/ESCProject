@@ -64,7 +64,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
 		public void bind(int position ){
 			String text = (position+1)+"." +questions.get(position).question+"("+questions.get(position).point+"pts)";
 			question.setText(text);
-			correctAnswer.setText("Correct Answer: "+questions.get(position).getAnswer());
+			correctAnswer.setText("Correct Answer: "+questions.get(position).answer);
 			myAnswer.setText("My Answer: "+answers.get(position));
 		}
 	}

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,7 +31,7 @@ import java.util.List;
 public class QuizFragment extends Fragment {
 	private RecyclerView viewList;
 	private QuizAdapter mAdapter;
-	private List<String> quizzes;
+	private List<Quiz> quizzes;
 	private FirebaseAuth auth;
 	private FirebaseUser firebaseUser;
 	private DatabaseReference databaseReference;
@@ -62,8 +63,10 @@ public class QuizFragment extends Fragment {
 						
 						Iterator<DataSnapshot> itr = dataSnapshot.getChildren().iterator();
 						while(itr.hasNext()) {
-							String tmp = itr.next().getKey();
-							quizzes.add(tmp);
+							DataSnapshot dss = itr.next();
+							String state = (String)dss.child("state").getValue();
+							String tmp = dss.getKey();
+							quizzes.add(new Quiz(tmp, state));
 						}
 						viewList = view.findViewById(R.id.recyclerViewQuiz);
 						LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
@@ -72,10 +75,29 @@ public class QuizFragment extends Fragment {
 						viewList.setAdapter(mAdapter);
 						viewList.addOnItemTouchListener(new RecyclerItemClickListener(view.getContext(), new RecyclerItemClickListener.OnItemClickListener(){
 							@Override
-							public void onItemClick(View view, int position) {
-								Intent intent = new Intent(view.getContext(), MyQuizActivity.class);
-								MyQuizActivity.state = new Quiz(mAdapter.quizzes.get(position), MyCourseActivity.state);
-								startActivity(intent);
+							public void onItemClick(final View view, final int position) {
+								databaseReference.child("users")
+										.child(CourseActivity.userType)
+										.child(firebaseUser.getUid())
+										.child("Course")
+										.child(MyCourseActivity.state.courID)
+										.child("Quiz").addListenerForSingleValueEvent(new ValueEventListener() {
+									@Override
+									public void onDataChange(DataSnapshot dataSnapshot) {
+										if(dataSnapshot.hasChild(mAdapter.quizzes.get(position).ID)||mAdapter.quizzes.get(position).state.equals("open")) {
+											Intent intent = new Intent(view.getContext(), MyQuizActivity.class);
+											MyQuizActivity.state = new Quiz(mAdapter.quizzes.get(position).ID, MyCourseActivity.state);
+											startActivity(intent);
+										} else {
+											Toast.makeText(view.getContext(),"This quiz is closed now", Toast.LENGTH_LONG).show();
+										}
+									}
+									
+									@Override
+									public void onCancelled(DatabaseError databaseError) {
+									
+									}
+								});
 							}
 						}));
 					}

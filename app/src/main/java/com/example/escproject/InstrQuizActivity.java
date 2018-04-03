@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -70,25 +71,16 @@ public class InstrQuizActivity extends AppCompatActivity {
 				submitButton.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						List<Question> questions = new ArrayList<>();
 						double totalPoint = 0;
-						for(int i=0;i<mAdapter.getItemCount();i++) {
-							String content = mAdapter.edit_questions.get(i).getText().toString().trim();
-							String answer = mAdapter.edit_answers.get(i).getText().toString().trim();
-							double point = Double.parseDouble(mAdapter.edit_points.get(i).getText().toString().trim());
-							Question tmp = new Question(content, answer, point);
-							questions.add(tmp);
-							totalPoint += point;
-						}
 						DatabaseReference quizRef = databaseReference.child("Courses")
 								.child(InstrCourseActivity.state.courID)
 								.child("Quiz")
 								.child(state.ID);
-						quizRef.child("grade").setValue(totalPoint);
-						for(int i=0;i<questions.size();i++) {
-							quizRef.child(String.valueOf(i+1)).setValue(questions.get(i));
+						for(int i=0;i<state.questions.size();i++) {
+							quizRef.child(String.valueOf(i+1)).setValue(state.questions.get(i));
+							totalPoint += state.questions.get(i).point;
 						}
-						
+						quizRef.child("grade").setValue(totalPoint);
 						Intent intent = new Intent(InstrQuizActivity.this, InstrCourseActivity.class);
 						startActivity(intent);
 					}

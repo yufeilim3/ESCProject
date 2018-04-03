@@ -10,11 +10,11 @@ import android.widget.TextView;
 import java.util.List;
 
 public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder> {
-	List<String> quizzes;
+	List<Quiz> quizzes;
 	private  int viewHolderCount = 0;
 	Context parentContext;
 	
-	QuizAdapter(Context context, List<String> quizzes){
+	QuizAdapter(Context context, List<Quiz> quizzes){
 		this.parentContext = context;
 		this.quizzes = quizzes;
 	}
@@ -50,7 +50,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
 		}
 		
 		public void bind(int position ){
-			String name = "quiz "+quizzes.get(position);
+			String name = "quiz "+quizzes.get(position).ID;
 			quizName.setText(name);
 		}
 	}

@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Quiz {
-    final String ID;
+    String ID;
+    String state;
     Course course;
     List<Question> questions;
     
-    Quiz(String ID) {
+    Quiz(String ID, String state) {
 	    this.questions = new ArrayList<>();
         this.ID = ID;
+        this.state = state;
     }
     
     Quiz(Course course, List<Question> questions, String ID) {
@@ -29,7 +31,7 @@ public class Quiz {
 		double grade = 0;
 		double totalPoint = 0;
 		for(int i=0;i<answers.size();i++) {
-			if(answers.get(i).equals(questions.get(i).getAnswer())) {
+			if(answers.get(i).equals(questions.get(i).answer)) {
 				grade += questions.get(i).point;
 			}
 			totalPoint += questions.get(i).point;
@@ -39,9 +41,9 @@ public class Quiz {
 }
 
 class Question {
-    String question;
-    private String answer;
-    double point;
+    public String question;
+    public String answer;
+    public double point;
 	
 	public Question() {
 	}
@@ -51,10 +53,6 @@ class Question {
         this.question = content;
         this.point = points;
         this.answer = answer;
-    }
-
-    public String getAnswer() {
-        return answer;
     }
 	
 }
